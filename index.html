@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <style>
+    .headr{
+    	display:flex;
+      
+    }
+    
+    #videos{
+    	
+      display:grid;
+      grid-template-columns:auto auto auto auto;
+      grid-template-rows:auto auto auto auto auto;
+      grid-gap:10px;
+      
+    }
+    
+  </style>
+</head>
+<body>
+    <div class="headr" style="background-color:white;height:70px;align-items:center;width:100%">
+    
+     <span class="material-icons" style="margin-right:3%;margin-left:1.5%;">menu</span>
+     <img src="https://logos-world.net/wp-content/uploads/2020/04/YouTube-Logo.png" style="height:70px;margin-right:9%;"/>
+      <input id="searchthis" style="padding-left:1%;width:400px;height:40px;"placeholder="Search"></input>
+  <button onclick="addvideos()"style="height:40px;width:40px"><span class="material-icons">search</span></button>
+  <button style="height:40px;width:40px;border-radius:50%;border:0px;margin-left:1%;"><span class="material-icons">mic</span></button>
+      <button style="height:40px;width:40px;border-radius:50%;border:0px;margin-left:10%;background-color:white;"><span class="material-icons">video_call</span></button>
+  <button style="height:40px;width:40px;border-radius:50%;border:0px;margin-left:1%;background-color:white;"><span class="material-icons">apps</span></button>
+  <button style="height:40px;width:40px;border-radius:50%;border:0px;margin-left:1%;background-color:white;"><span class="material-icons">notifications</span></button>
+    </div>
+  
+  
+  <div id="videos"></div>
+</body>
+
+<script>
+  var container=document.getElementById("videos");
+  //starting of default fetch
+  /*
+  
+  `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&maxResults=20&key=AIzaSyAgwEDO6iUMFEgH2QgP-pP_B5rB44EY8ms`
+  
+  
+  
+  
+  
+  
+  */
+  fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&maxResults=20&videoLicense=creativeCommon&key=AIzaSyAgwEDO6iUMFEgH2QgP-pP_B5rB44EY8ms`).then(function(res){
+return res.json();
+}).then(function(res){
+
+console.log(res);
+var aroi1=res.items;
+var idl1=[];
+for(l in aroi1)
+idl1.push(aroi1[l]["id"]);
+
+console.log(idl1);
+
+
+idl1.forEach(function(vid){
+     
+     		var divve1=document.createElement("div");
+            divve1.innerHTML=`<iframe width="280" height="157.5" src="https://www.youtube.com/embed/${vid}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+     
+     	container.appendChild(divve1);
+        
+     });
+
+
+
+
+
+
+
+
+
+
+/*var aroi1=res.items;
+var idl1=[];
+for(l in aroi1)
+idl1.push(aroi1[l]["id"]["videoId"]);
+
+     idl.forEach(function(vid){
+     
+     		var divve1=document.createElement("div");
+            divve1.innerHTML=`<iframe width="280" height="157.5" src="https://www.youtube.com/embed/${vid}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+     
+     	container.appendChild(divve1);
+        
+     });*/
+});
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //end of default fetch
+function addvideos(){
+  
+  container.innerHTML=null;
+var querynow=document.getElementById("searchthis").value;
+
+fetch(`https://youtube.googleapis.com/youtube/v3/search?maxResults=20&q=${querynow}&type=video&videoEmbeddable=true&key=AIzaSyAgwEDO6iUMFEgH2QgP-pP_B5rB44EY8ms`).then(function(res){
+return res.json();
+}).then(function(res){
+
+var aroi=res.items;
+var idl=[];
+for(l in aroi)
+idl.push(aroi[l]["id"]["videoId"]);
+
+     idl.forEach(function(vid){
+     
+     		var divve=document.createElement("div");
+            divve.innerHTML=`<iframe width="280" height="157.5" src="https://www.youtube.com/embed/${vid}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+     
+     	container.appendChild(divve);
+        
+     });
+});
+
+}  
+  
+  
+  
+  
+  
+  
+  
+  
+</script>
+
+</html>
